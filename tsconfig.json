@@ -10,6 +10,6 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"]
   },
-  "include": ["src/**/*.ts", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
