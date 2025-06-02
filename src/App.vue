@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { NButton, NDivider, NCard, NLayoutHeader, NMenu } from "naive-ui";
+import { NLayoutHeader, NMenu } from "naive-ui";
+import GalleryCard from "./components/PhotoCard.vue";
 import { ref } from 'vue';
 
 let likes = ref<number>(0);
@@ -33,13 +34,8 @@ const menuOptions = [
   </n-layout-header>
 
   <h1>Cochabamba</h1>
-  <n-card title="Reactions">
-    <div>Likes: <strong>{{likes}}</strong></div>
-    <n-divider />
-    <div>
-      <n-button @click="increaseLikes">Like!</n-button>
-    </div>
-  </n-card>
+  <gallery-card id="1" photo-url="./egg.jpg" alt="Monke"/>
+
 </template>
 
 <style scoped>
