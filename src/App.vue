@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import { NLayoutHeader, NMenu } from "naive-ui";
-import GalleryCard from "./components/PhotoCard.vue";
+import GalleryGrid from "./components/GalleryGrid.vue";
 import { ref } from 'vue';
 
-let likes = ref<number>(0);
-function increaseLikes() {
-  likes.value++;
-}
-
-const activeKey = ref('home');
+const activeKey = ref<string>('home');
 
 const menuOptions = [
   { label: 'Головна', key: 'home' },
@@ -34,7 +29,7 @@ const menuOptions = [
   </n-layout-header>
 
   <h1>Cochabamba</h1>
-  <gallery-card id="1" photo-url="./egg.jpg" alt="Monke"/>
+  <gallery-grid/>
 
 </template>
 
