@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, computed } from 'vue';
+import { formatDateUA } from '@/utils/date';
 
 const props = defineProps<{
   id: string;
@@ -14,12 +15,7 @@ const emits = defineEmits<{
 }>();
 
 const formattedDate = computed(() => {
-  const d = new Date(props.date);
-  return d.toLocaleDateString('uk-UA', {
-    year:  'numeric',
-    month: 'short',
-    day:   'numeric',
-  });
+  return formatDateUA(props.date);
 });
 
 function onCardClick() {

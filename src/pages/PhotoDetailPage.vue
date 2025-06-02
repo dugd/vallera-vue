@@ -2,19 +2,9 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { NButton, NEmpty } from 'naive-ui';
-
-interface Photo {
-  id: string;
-  url: string;
-  author: string;
-  date: string;
-}
-
-const MOCK_PHOTOS: Photo[] = [
-  { id: '1', url: 'https://picsum.photos/600/800?random=1', author: 'Ivan',  date: '2025-05-28T10:00:00Z' },
-  { id: '2', url: 'https://picsum.photos/500/500?random=2', author: 'Olena', date: '2025-05-29T14:20:00Z' },
-  { id: '3', url: 'https://picsum.photos/700/500?random=3', author: 'Sergey', date: '2025-05-27T18:45:00Z' },
-];
+import { Photo } from "@/types";
+import { formatDateUA } from '@/utils/date';
+import { MOCK_PHOTOS } from '@/services/mockPhotos';
 
 const route = useRoute();
 const photo = ref<Photo | null>(null);
@@ -25,12 +15,7 @@ onMounted(() => {
 });
 
 const formattedDate = computed(() => {
-  if (!photo.value) return '';
-  return new Date(photo.value.date).toLocaleDateString('uk-UA', {
-    year:  'numeric',
-    month: 'long',
-    day:   'numeric'
-  });
+  return formatDateUA(photo.value);
 });
 
 </script>
