@@ -1,44 +1,38 @@
-<script setup lang="ts">
-import { NLayoutHeader, NMenu } from "naive-ui";
-import GalleryGrid from "./components/GalleryGrid.vue";
-import { ref } from 'vue';
-
-const activeKey = ref<string>('home');
-
-const menuOptions = [
-  { label: 'Головна', key: 'home' },
-  { label: 'Про нас', key: 'about' },
-  { label: 'Послуги', key: 'services' },
-  { label: 'Контакти', key: 'contacts' }
-];
-
-</script>
-
 <template>
-  <n-layout-header style="display: flex; align-items: center; padding: 0 24px;">
-    <div class="logo" style="color: white; font-weight: bold; font-size: 1.2rem; margin-right: 32px;">
-      MyApp
-    </div>
+  <n-layout style="min-height: 100vh;">
+    <n-message-provider>
 
-    <n-menu
-        :options="menuOptions"
-        mode="horizontal"
-        :value="activeKey"
-        inverted
-    />
-  </n-layout-header>
+      <n-layout-header
+          style="display: flex; align-items: center; padding: 0 24px; background: #3c3e44;"
+      >
+        <div
+            class="logo"
+            @click="$router.push({ name: 'Gallery' })"
+        >
+          Vallera
+        </div>
+        <Header />
+      </n-layout-header>
 
-  <router-view />
+      <n-layout-content style="padding: 16px;">
+          <router-view />
+      </n-layout-content>
+
+    </n-message-provider>
+  </n-layout>
 </template>
 
-<style scoped>
-.n-layout-header {
-  background-color: #3c3e44;
-}
+<script setup lang="ts">
+import Header from '@/components/Header.vue';
+import { NLayout, NLayoutHeader, NLayoutContent, NMessageProvider } from 'naive-ui';
+</script>
 
-.n-layout-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+<style scoped>
+.logo {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-right: 32px;
+  cursor: pointer;
 }
 </style>

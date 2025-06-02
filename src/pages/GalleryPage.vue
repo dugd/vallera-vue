@@ -29,8 +29,7 @@ onMounted(() => {
 });
 
 function onGalleryPhotoClick(id: string) {
-  console.log("Clicked on:", id);
-  // router.push({ name: 'PhotoDetail', params: { id } });
+  router.push({ name: 'PhotoDetail', params: { id } });
 }
 </script>
 
