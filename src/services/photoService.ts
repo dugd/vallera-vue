@@ -1,4 +1,4 @@
-import {auth, db, storage} from './firebase';
+import { auth, db, storage } from './firebase';
 import {
     collection,
     addDoc,
@@ -18,8 +18,7 @@ import {
     getDownloadURL,
     deleteObject
 } from 'firebase/storage';
-import type {Photo} from '@/types';
-
+import type { Photo } from '@/types';
 
 export async function createPhoto(file: File, title: string): Promise<string> {
     const user = auth.currentUser;
@@ -35,15 +34,14 @@ export async function createPhoto(file: File, title: string): Promise<string> {
     const docRef = await addDoc(collection(db, 'photos'), {
         url,
         path,
-        authorUid: uid,
+        authorUid:  uid,
         authorName: user.displayName || user.email,
-        date: serverTimestamp(),
+        date:       serverTimestamp(),
         title
     });
 
     return docRef.id;
 }
-
 
 export async function fetchAllPhotos(): Promise<Photo[]> {
     const q = query(collection(db, 'photos'), orderBy('date', 'desc'));
@@ -51,33 +49,31 @@ export async function fetchAllPhotos(): Promise<Photo[]> {
     return snap.docs.map(d => {
         const data = d.data() as any;
         return {
-            id: d.id,
-            url: data.url,
-            path: data.path,
-            authorUid: data.authorUid,
+            id:         d.id,
+            url:        data.url,
+            path:       data.path,
+            authorUid:  data.authorUid,
             authorName: data.authorName,
-            date: data.date?.toDate().toISOString() || new Date().toISOString(),
-            title: data.title || ''
+            date:       data.date?.toDate().toISOString() || new Date().toISOString(),
+            title:      data.title || ''
         };
     });
 }
-
 
 export async function fetchPhotoById(id: string): Promise<Photo | null> {
     const snap = await getDoc(doc(db, 'photos', id));
     if (!snap.exists()) return null;
     const data = snap.data() as any;
     return {
-        id: snap.id,
-        url: data.url,
-        path: data.path,
-        authorUid: data.authorUid,
+        id:         snap.id,
+        url:        data.url,
+        path:       data.path,
+        authorUid:  data.authorUid,
         authorName: data.authorName,
-        date: data.date?.toDate().toISOString() || new Date().toISOString(),
-        title: data.title || ''
+        date:       data.date?.toDate().toISOString() || new Date().toISOString(),
+        title:      data.title || ''
     };
 }
-
 
 export async function updatePhoto(
     id: string,
@@ -86,34 +82,38 @@ export async function updatePhoto(
     await updateDoc(doc(db, 'photos', id), newData);
 }
 
-
 export async function deletePhoto(id: string, path: string): Promise<void> {
     const fileRef = storageRef(storage, path);
     await deleteObject(fileRef);
     await deleteDoc(doc(db, 'photos', id));
 }
 
-
 export async function fetchMyPhotos(): Promise<Photo[]> {
     const user = auth.currentUser;
     if (!user) return [];
     const uid = user.uid;
-    const q = query(
-        collection(db, 'photos'),
-        where('authorUid', '==', uid),
-        orderBy('date', 'desc')
-    );
+
+    const q = query(collection(db, 'photos'), where('authorUid', '==', uid));
     const snap = await getDocs(q);
-    return snap.docs.map(d => {
+
+    const all: Photo[] = snap.docs.map(d => {
         const data = d.data() as any;
         return {
-            id: d.id,
-            url: data.url,
-            path: data.path,
-            authorUid: data.authorUid,
+            id:         d.id,
+            url:        data.url,
+            path:       data.path,
+            authorUid:  data.authorUid,
             authorName: data.authorName,
-            date: data.date?.toDate().toISOString() || new Date().toISOString(),
-            title: data.title || ''
+            date:       data.date?.toDate().toISOString() || new Date().toISOString(),
+            title:      data.title || ''
         };
     });
+
+    all.sort((a, b) => {
+        const da = new Date(a.date).getTime();
+        const db = new Date(b.date).getTime();
+        return db - da;
+    });
+
+    return all;
 }

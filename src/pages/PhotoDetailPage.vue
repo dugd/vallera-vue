@@ -39,7 +39,7 @@ import {NButton, NEmpty, useMessage} from 'naive-ui';
 import {fetchPhotoById, deletePhoto, updatePhoto} from '@/services/photoService';
 import {auth} from '@/services/firebase';
 import {formatDateUA} from '@/utils/date';
-import type {Photo} from '@/types/photo';
+import type {Photo} from '@/types';
 
 const route = useRoute();
 const router = useRouter();

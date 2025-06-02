@@ -9,7 +9,7 @@ const firebaseConfig = {
     projectId: "vallera-vue",
     storageBucket: "vallera-vue.firebasestorage.app",
     messagingSenderId: "748307709713",
-    appId: "1:748307709713:web:2f03cdaef3badb40bfd6b0",
+    appId: "1:748307709713:web:2f03cdaef3badb40bfd6b0"
 };
 const app = initializeApp(firebaseConfig);
 

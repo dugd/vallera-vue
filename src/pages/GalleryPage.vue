@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import type { Photo } from '@/types/photo';
+import type { Photo } from '@/types';
 import GalleryGrid from '@/components/GalleryGrid.vue';
 import { fetchAllPhotos } from '@/services/photoService';
 

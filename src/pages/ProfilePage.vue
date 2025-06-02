@@ -47,7 +47,7 @@ import {useRouter} from 'vue-router';
 import {useAuth} from '@/composables/useAuth';
 import {fetchMyPhotos} from '@/services/photoService';
 import {formatDateUA} from '@/utils/date';
-import type {Photo} from '@/types/photo';
+import type {Photo} from '@/types';
 
 const {user} = useAuth();
 const router = useRouter();
