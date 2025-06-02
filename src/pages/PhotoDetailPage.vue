@@ -15,7 +15,8 @@ onMounted(() => {
 });
 
 const formattedDate = computed(() => {
-  return formatDateUA(photo.value);
+  if (!photo.value) return '';
+  return formatDateUA(photo.value.date);
 });
 
 </script>
