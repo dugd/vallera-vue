@@ -28,9 +28,7 @@ const menuOptions = [
     />
   </n-layout-header>
 
-  <h1>Cochabamba</h1>
-  <gallery-grid/>
-
+  <router-view />
 </template>
 
 <style scoped>

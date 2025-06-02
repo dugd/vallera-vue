@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 import { NEmpty } from 'naive-ui';
 import PhotoCard from './PhotoCard.vue';
 
@@ -7,25 +7,19 @@ interface Photo {
   id:     string;
   url:    string;
   author: string;
-  date:   string; // ISO
+  date:   string;
 }
 
-const photos = ref<Photo[]>([]);
+const props = defineProps<{
+  photos: Photo[];
+}>();
 
-photos.value = [
-  { id: '1', url: 'https://picsum.photos/400/600?random=1', author: 'Ivan',  date: '2025-05-28T10:00:00Z' },
-  { id: '2', url: 'https://picsum.photos/400/300?random=2', author: 'Olena', date: '2025-05-29T14:20:00Z' },
-  { id: '3', url: 'https://picsum.photos/400/500?random=3', author: 'Sergey', date: '2025-05-27T18:45:00Z' },
-  { id: '4', url: 'https://picsum.photos/600/600?random=4', author: 'Ivan',  date: '2025-05-28T10:00:00Z' },
-  { id: '5', url: 'https://picsum.photos/400/300?random=5', author: 'Olena', date: '2025-05-29T14:20:00Z' },
-  { id: '6', url: 'https://picsum.photos/600/400?random=6', author: 'Sergey', date: '2025-05-27T18:45:00Z' },
-  { id: '7', url: 'https://picsum.photos/400/300?random=7', author: 'Ivan',  date: '2025-05-28T10:00:00Z' },
-  { id: '8', url: 'https://picsum.photos/400/300?random=8', author: 'Olena', date: '2025-05-29T14:20:00Z' },
-  { id: '9', url: 'https://picsum.photos/600/500?random=9', author: 'Sergey', date: '2025-05-27T18:45:00Z' },
-];
+const emits = defineEmits<{
+  (e: 'photo-click', id: string): void;
+}>();
 
-function onPhotoClick(payload: { id: string }) {
-  console.log('Клік по фото: id =', payload.id);
+function onPhotoClick(evt: { id: string }) {
+  emits('photo-click', evt.id);
 }
 </script>
 
@@ -50,7 +44,6 @@ function onPhotoClick(payload: { id: string }) {
 </template>
 
 <style scoped>
-
 .css-masonry {
   column-count: 4;
   column-gap: 16px;

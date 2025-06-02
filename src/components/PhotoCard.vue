@@ -5,7 +5,7 @@ const props = defineProps<{
   id: string;
   photoUrl: string;
   author: string;
-  date: string; // ISO
+  date: string;
   alt?: string;
 }>();
 
@@ -16,9 +16,9 @@ const emits = defineEmits<{
 const formattedDate = computed(() => {
   const d = new Date(props.date);
   return d.toLocaleDateString('uk-UA', {
-    year:   'numeric',
-    month:  'short',
-    day:    'numeric',
+    year:  'numeric',
+    month: 'short',
+    day:   'numeric',
   });
 });
 
@@ -31,14 +31,14 @@ function onCardClick() {
   <div class="photo-card" @click="onCardClick">
     <div class="photo-card__img-wrapper">
       <img
-          :src="props.photoUrl"
-          :alt="props.alt || props.author"
+          :src="photoUrl"
+          :alt="alt || author"
           class="photo-card__image"
           loading="lazy"
       />
     </div>
     <div class="photo-card__meta">
-      <span class="photo-card__author">{{ props.author }}</span>
+      <span class="photo-card__author">{{ author }}</span>
       <span class="photo-card__separator">·</span>
       <span class="photo-card__date">{{ formattedDate }}</span>
     </div>
