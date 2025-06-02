@@ -1,38 +1,33 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, computed } from 'vue';
-import { formatDateUA } from '@/utils/date';
 
 const props = defineProps<{
-  id: string;
+  id:      string;
   photoUrl: string;
-  author: string;
-  date: string;
-  alt?: string;
+  author:   string;
+  date:    string;
 }>();
 
 const emits = defineEmits<{
-  (e: 'click', payload: { id: string }): void;
+  (e: 'click'): void;
 }>();
 
 const formattedDate = computed(() => {
-  return formatDateUA(props.date);
+  return new Date(props.date).toLocaleDateString('uk-UA', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
 });
 
-function onCardClick() {
-  emits('click', { id: props.id });
+function onClick() {
+  emits('click');
 }
 </script>
 
 <template>
-  <div class="photo-card" @click="onCardClick">
-    <div class="photo-card__img-wrapper">
-      <img
-          :src="photoUrl"
-          :alt="alt || author"
-          class="photo-card__image"
-          loading="lazy"
-      />
-    </div>
+  <div class="photo-card" @click="onClick">
+    <img :src="photoUrl" alt="" class="photo-card__image" loading="lazy" />
     <div class="photo-card__meta">
       <span class="photo-card__author">{{ author }}</span>
       <span class="photo-card__separator">·</span>
@@ -43,54 +38,31 @@ function onCardClick() {
 
 <style scoped>
 .photo-card {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
+  cursor: pointer;
   border-radius: 4px;
+  background: #fff;
   overflow: hidden;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s;
 }
-
 .photo-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
 }
-
-.photo-card__img-wrapper {
-  width: 100%;
-  overflow: hidden;
-}
-
 .photo-card__image {
-  display: block;
   width: 100%;
-  height: auto;
+  display: block;
   object-fit: cover;
-  user-select: none;
-  pointer-events: none;
 }
-
 .photo-card__meta {
   display: flex;
   align-items: center;
-  padding: 8px;
-  font-size: 14px;
-  color: #333;
+  padding: 6px 8px;
+  font-size: 13px;
   background: #fafafa;
+  color: #333;
 }
-
-.photo-card__author {
-  font-weight: 500;
-}
-
-.photo-card__separator {
-  margin: 0 4px;
-  color: #888;
-}
-
-.photo-card__date {
-  color: #666;
-}
+.photo-card__author { font-weight: 500; }
+.photo-card__separator { margin: 0 4px; color: #888; }
+.photo-card__date { color: #666; }
 </style>

@@ -1,28 +1,3 @@
-<script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
-import { NEmpty } from 'naive-ui';
-import PhotoCard from './PhotoCard.vue';
-
-interface Photo {
-  id:     string;
-  url:    string;
-  author: string;
-  date:   string;
-}
-
-const props = defineProps<{
-  photos: Photo[];
-}>();
-
-const emits = defineEmits<{
-  (e: 'photo-click', id: string): void;
-}>();
-
-function onPhotoClick(evt: { id: string }) {
-  emits('photo-click', evt.id);
-}
-</script>
-
 <template>
   <template v-if="photos.length === 0">
     <n-empty description="Немає фото" />
@@ -34,14 +9,33 @@ function onPhotoClick(evt: { id: string }) {
           :key="photo.id"
           :id="photo.id"
           :photoUrl="photo.url"
-          :author="photo.author"
+          :author="photo.authorName"
           :date="photo.date"
-          @click="onPhotoClick"
+          @click="onClick(photo.id)"
           class="css-masonry-item"
       />
     </section>
   </template>
 </template>
+
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+import { NEmpty } from 'naive-ui';
+import PhotoCard from './PhotoCard.vue';
+import type { Photo } from '@/types/photo';
+
+const props = defineProps<{
+  photos: Photo[];
+}>();
+
+const emits = defineEmits<{
+  (e: 'photo-click', id: string): void;
+}>();
+
+function onClick(id: string) {
+  emits('photo-click', id);
+}
+</script>
 
 <style scoped>
 .css-masonry {
@@ -49,25 +43,15 @@ function onPhotoClick(evt: { id: string }) {
   column-gap: 16px;
   padding: 16px;
 }
-
 @media (max-width: 1200px) {
-  .css-masonry {
-    column-count: 3;
-  }
+  .css-masonry { column-count: 3; }
 }
-
 @media (max-width: 800px) {
-  .css-masonry {
-    column-count: 2;
-  }
+  .css-masonry { column-count: 2; }
 }
-
 @media (max-width: 500px) {
-  .css-masonry {
-    column-count: 1;
-  }
+  .css-masonry { column-count: 1; }
 }
-
 .css-masonry-item {
   display: inline-block;
   width: 100%;
