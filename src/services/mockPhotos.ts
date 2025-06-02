@@ -1,4 +1,4 @@
-import type { Photo } from '@/types/photo';
+import type { Photo } from '@/types';
 
 export const MOCK_PHOTOS: Photo[] = [
     { id: '1', url: 'https://picsum.photos/400/600?random=1', author: 'Ivan',  date: '2025-05-28T10:00:00Z' },

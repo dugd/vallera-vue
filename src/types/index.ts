@@ -6,3 +6,10 @@ export interface Photo {
     title?: string;
     tags?: string[];
 }
+
+export interface UserProfile {
+    uid:         string;
+    email:       string;
+    displayName: string;
+    avatarUrl?:  string;
+}
